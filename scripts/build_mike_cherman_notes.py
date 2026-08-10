@@ -5,6 +5,8 @@ from __future__ import annotations
 
 import html
 import json
+import os
+import re
 from pathlib import Path
 
 
@@ -23,7 +25,53 @@ def source_url(video_id: str, seconds: int | None = None) -> str:
     return f"{url}&amp;t={seconds}s" if seconds is not None else url
 
 
-def render_page(record: dict, note: dict) -> str:
+def render_licensed_transcript(record: dict, article_html: str) -> str:
+    """Render a publisher-licensed caption transcript with explicit attribution."""
+    return f'''<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Full transcript — {html.escape(record['title'])}</title>
+<meta name="description" content="Complete timestamped publisher caption transcript for {html.escape(record['title'])}.">
+<link rel="stylesheet" href="../styles.css"></head>
+<body><main>
+  <p class="top"><a href="../{record['id']}.html">← Interview summary and cleaned stories</a></p>
+  <header class="hero transcript-hero">
+    <p class="eyebrow">Complete timestamped caption transcript · {record['date']} · {clock(record['duration'])}</p>
+    <h1>{html.escape(record['title'])}</h1>
+    <p class="byline">{html.escape(record['channel'])}</p>
+    <p class="summary">This is the full publisher caption sequence, separated from the edited interview notes so the complete source wording remains readable when needed.</p>
+  </header>
+  <section class="license-note"><p><b>Attribution.</b> “{html.escape(record['title'])},” by {html.escape(record['channel'])}, <a href="{source_url(record['id'])}" target="_blank" rel="noopener">published on YouTube</a> under {html.escape(record['license'])}. YouTube identifies Creative Commons uploads as reusable subject to CC BY attribution. Captions may contain machine errors; verify the recording before quoting.</p></section>
+  <article class="full-transcript">{article_html}</article>
+  <p class="end"><a href="{source_url(record['id'])}" target="_blank" rel="noopener">Watch the source recording ↗</a></p>
+</main></body></html>'''
+
+
+def build_licensed_transcripts(records: list[dict]) -> None:
+    """Refresh licensed transcript artifacts when the ignored source corpus is present."""
+    source_dir_value = os.environ.get("MIKE_TRANSCRIPT_SOURCE_DIR")
+    source_dir = Path(source_dir_value) if source_dir_value else None
+    for record in records:
+        relative_target = record.get("full_transcript_path")
+        if not relative_target:
+            continue
+        target = OUT / relative_target
+        if source_dir:
+            source = source_dir / f"{record['id']}.html"
+            if not source.exists():
+                raise FileNotFoundError(f"licensed transcript source missing: {source}")
+            source_text = source.read_text(encoding="utf-8")
+            match = re.search(r"<article>(.*?)</article>", source_text, flags=re.DOTALL)
+            if not match:
+                raise ValueError(f"licensed transcript article missing: {source}")
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_text(render_licensed_transcript(record, match.group(1)), encoding="utf-8")
+        elif not target.exists():
+            raise RuntimeError(
+                f"{target} is absent; set MIKE_TRANSCRIPT_SOURCE_DIR to rebuild licensed transcripts"
+            )
+
+
+def render_page(record: dict, note: dict, cleaned_sections: list[list]) -> str:
     moments = "\n".join(
         f'''<li id="t{second}">
           <a class="time" href="{source_url(record['id'], second)}" target="_blank" rel="noopener">{clock(second)}</a>
@@ -33,7 +81,28 @@ def render_page(record: dict, note: dict) -> str:
     )
     note_text = record.get("note")
     source_note = f'<p class="source-note">{html.escape(note_text)}</p>' if note_text else ""
-    if record["transcript_source"].casefold() == "youtube captions":
+    cleaned_transcript = ""
+    if cleaned_sections:
+        cleaned_blocks = "\n".join(
+            f'''<li id="cleaned-t{second}">
+          <a class="time" href="{source_url(record['id'], second)}" target="_blank" rel="noopener">{clock(second)}</a>
+          <div><h2>{html.escape(label)}</h2><p>{html.escape(body)}</p></div>
+        </li>'''
+            for second, label, body in cleaned_sections
+        )
+        cleaned_transcript = f'''<section class="cleaned-reading">
+    <p class="section-label">Cleaned interview</p>
+    <p class="reading-note">Complete chronological reading notes for this recording. The wording is edited and paraphrased for clarity; timestamps open the source and these paragraphs should not be quoted as Mike’s exact words.</p>
+    <ol class="cleaned-transcript">{cleaned_blocks}</ol>
+  </section>'''
+    if record.get("full_transcript_path"):
+        transcript_access = (
+            f'<p><a class="transcript-link" href="{html.escape(record["full_transcript_path"])}">'
+            "Read the complete timestamped transcript →</a></p>"
+            f'<p>The publisher released this recording under {html.escape(record["license"])}. '
+            "The complete caption sequence is therefore reproduced with title, creator, source, and license attribution.</p>"
+        )
+    elif record["transcript_source"].casefold() == "youtube captions":
         transcript_access = (
             f'<p>This recording has a publisher-served YouTube caption track. '
             f'<a href="{source_url(record["id"])}" target="_blank" rel="noopener">Open the video</a>, '
@@ -62,6 +131,7 @@ def render_page(record: dict, note: dict) -> str:
   <blockquote><p>“{html.escape(note['quote'])}”</p><cite><a href="{source_url(record['id'], note['quote_t'])}" target="_blank" rel="noopener">Caption excerpt · {clock(note['quote_t'])}</a></cite></blockquote>
   <section class="tom-card"><p class="eyebrow">What Tom should take from this</p><p>{html.escape(note['tom'])}</p></section>
   <section><p class="section-label">Interview details and stories</p><ol class="moments">{moments}</ol></section>
+{cleaned_transcript}
 {source_note}
   <details class="transcript-access"><summary>Raw transcript access</summary>{transcript_access}</details>
   <section class="method"><p><b>Editorial method.</b> These are source-faithful paraphrases made from public captions or local speech recognition, not a verbatim transcript. Timestamps open the exact recording position. Verify the source before quoting Mike.</p></section>
@@ -112,19 +182,38 @@ def render_index(records: list[dict], notes: dict) -> str:
 def main() -> None:
     manifest = json.loads((OUT / "manifest.json").read_text(encoding="utf-8"))
     records = sorted(manifest["records"], key=lambda record: (record["date"], record["id"]), reverse=True)
+    build_licensed_transcripts(records)
     notes = json.loads((OUT / "notes.json").read_text(encoding="utf-8"))
+    cleaned = json.loads((OUT / "cleaned-transcripts.json").read_text(encoding="utf-8"))
     ids = {record["id"] for record in records}
     if set(notes) != ids:
         raise ValueError(f"notes/manifest mismatch: missing={sorted(ids-set(notes))}, extra={sorted(set(notes)-ids)}")
     oversized = {video_id: len(note["quote"].split()) for video_id, note in notes.items() if len(note["quote"].split()) > 24}
     if oversized:
         raise ValueError(f"caption excerpts exceed 24 words: {oversized}")
+    if set(cleaned) != ids:
+        raise ValueError(
+            f"cleaned/manifest mismatch: missing={sorted(ids-set(cleaned))}, extra={sorted(set(cleaned)-ids)}"
+        )
+    for record in records:
+        blocks = cleaned[record["id"]]
+        seconds = [block[0] for block in blocks]
+        if seconds != sorted(set(seconds)):
+            raise ValueError(f"cleaned transcript timestamps not strictly ordered: {record['id']}")
+        if seconds[0] > 120 or seconds[-1] < record["duration"] - 240:
+            raise ValueError(f"cleaned transcript does not cover full chronology: {record['id']}")
+        for second, label, body in blocks:
+            if not (0 <= second <= record["duration"]):
+                raise ValueError(f"cleaned transcript timestamp outside duration: {record['id']} {second}")
+            if not label.strip() or len(body.split()) < 20:
+                raise ValueError(f"thin cleaned transcript block: {record['id']} {second}")
     for index, record in enumerate(records):
         (OUT / f"{record['id']}.html").write_text(
-            render_page(record, notes[record["id"]]), encoding="utf-8"
+            render_page(record, notes[record["id"]], cleaned[record["id"]]), encoding="utf-8"
         )
     (OUT / "index.html").write_text(render_index(records, notes), encoding="utf-8")
-    print(f"Built {len(records)} cleaned interview-note pages")
+    block_count = sum(len(blocks) for blocks in cleaned.values())
+    print(f"Built {len(records)} complete cleaned interview pages with {block_count} chronological blocks")
 
 
 if __name__ == "__main__":
