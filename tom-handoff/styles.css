@@ -1,0 +1,143 @@
+* { box-sizing: border-box; }
+
+html { background: #fff; color: #000; }
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+main {
+  width: min(760px, 100%);
+  margin: 0 auto;
+  padding: 10px 10px 34px;
+}
+
+.intro {
+  margin-bottom: 12px;
+}
+
+.intro h1 {
+  max-width: 18ch;
+  margin: 0;
+  font-size: clamp(24px, 6vw, 44px);
+  line-height: .95;
+  letter-spacing: -.045em;
+}
+
+section { margin: 0 0 58px; }
+figure, p, ul { margin: 0; }
+img, picture { display: block; max-width: 100%; }
+
+.runway-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 4px;
+}
+
+.runway-grid img { width: 100%; height: auto; }
+
+.study {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.study figure > img,
+.art-frame {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+}
+
+.study figure > img { object-fit: cover; }
+
+.art-frame {
+  display: grid;
+  place-items: center;
+  background: #f3f3f3;
+}
+
+.art-frame img {
+  width: 88%;
+  height: 88%;
+  object-fit: contain;
+}
+
+.hat-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 4px;
+}
+
+.hat-grid picture,
+.hat-grid picture img {
+  width: 100%;
+  height: auto;
+}
+
+.hat-grid picture {
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+}
+
+.hat-grid picture img { object-fit: cover; }
+
+.hat-ball { background: #00eeff; }
+.hat-bandana { background: #ff00e6; }
+
+.pitch {
+  padding: 28px 0;
+  border-top: 2px solid #000;
+  border-bottom: 2px solid #000;
+}
+
+.pitch ul {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 22px;
+  padding-left: 1.2em;
+  font-size: clamp(18px, 3.2vw, 23px);
+  line-height: 1.28;
+}
+
+.final-work img {
+  width: min(650px, 96vw);
+  height: auto;
+  margin: 0 auto;
+}
+
+footer {
+  padding-top: 18px;
+  border-top: 2px solid #000;
+  text-align: center;
+}
+
+.contact-links {
+  display: grid;
+  gap: 8px;
+}
+
+.contact-links a {
+  display: block;
+  padding: 16px 10px;
+  border: 2px solid #000;
+  color: inherit;
+  font-size: clamp(18px, 4vw, 28px);
+  font-weight: 700;
+  line-height: 1.05;
+  text-decoration: none;
+}
+
+.contact-links a:hover,
+.contact-links a:focus-visible {
+  color: #fff;
+  background: #000;
+}
+
+@media (min-width: 700px) {
+  main { padding-top: 12px; }
+  section { margin-bottom: 72px; }
+  .study { gap: 14px; }
+}
