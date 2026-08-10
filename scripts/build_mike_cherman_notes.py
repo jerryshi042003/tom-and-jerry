@@ -119,14 +119,21 @@ def build_licensed_transcripts(records: list[dict]) -> None:
             )
 
 
+def select_summary_moments(moments: list[list], limit: int = 4) -> list[list]:
+    """Keep a short, evenly distributed overview while the full digest remains below."""
+    if len(moments) <= limit:
+        return moments
+    indexes = [round(index * (len(moments) - 1) / (limit - 1)) for index in range(limit)]
+    return [moments[index] for index in indexes]
+
+
 def render_page(record: dict, note: dict, cleaned_sections: list[list]) -> str:
     summary_bullets = [
-        f'''<li><b>What this is:</b> {html.escape(note["summary"])}</li>''',
-        f'''<li><b>Context:</b> A {clock(record["duration"])} {html.escape(record["format"])} published by {html.escape(record["channel"])} on {record["date"]}.</li>''',
+        f'''<li class="overview">{html.escape(note["summary"])}</li>''',
     ]
     summary_bullets.extend(
-        f'''<li><b>{html.escape(label)}.</b> {html.escape(body)}</li>'''
-        for _, label, body in note["moments"]
+        f'''<li><strong>{html.escape(label)}</strong><span>{html.escape(body)}</span></li>'''
+        for _, label, body in select_summary_moments(note["moments"])
     )
     cleaned_blocks = "\n".join(
         f'''<li id="cleaned-t{second}">
@@ -143,9 +150,10 @@ def render_page(record: dict, note: dict, cleaned_sections: list[list]) -> str:
 <link rel="stylesheet" href="styles.css"></head>
 <body><main>
   <p class="back"><a href="./">← All interviews</a></p>
-  <header>
+  <header class="interview-header">
+    <p class="source">{html.escape(record['channel'])}</p>
     <h1>{html.escape(record['title'])}</h1>
-    <p class="meta">{html.escape(record['channel'])} · {record['date']} · {clock(record['duration'])} · {html.escape(record['format'])}</p>
+    <p class="context"><span>{html.escape(record['format'])}</span><span>{record['date']}</span><span>{clock(record['duration'])}</span></p>
   </header>
   <section class="summary-block"><h2>Summary</h2><ul>{''.join(summary_bullets)}</ul></section>
   <section><h2>Transcript summary</h2><ol class="cleaned-transcript">{cleaned_blocks}</ol></section>

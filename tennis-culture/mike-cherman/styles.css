@@ -1,44 +1,76 @@
 * { box-sizing: border-box; }
-html { background: #fff; color: #111; }
-body { margin: 0; font: 16px/1.55 Arial, Helvetica, sans-serif; }
-main { width: min(820px, 100%); margin: 0 auto; padding: 28px 18px 88px; }
-a { color: #0645ad; text-underline-offset: 2px; }
-h1 { margin: 0 0 4px; font-size: 32px; line-height: 1.15; }
-h2 { margin: 0; font-size: 20px; line-height: 1.3; }
-p { max-width: 760px; }
-header { margin: 0 0 42px; }
-.back { margin: 0 0 32px; }
-.meta { margin: 4px 0 18px; color: #555; font-size: 14px; }
+
+:root {
+  color: #171716;
+  background: #f7f6f2;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+body { margin: 0; }
+main { width: min(780px, 100%); margin: 0 auto; padding: 48px 24px 96px; }
+a { color: #174f9b; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+p { margin: 0; }
+h1, h2, h3 { color: #111; }
+h1 { margin: 0; font: 400 42px/1.1 Georgia, Cambria, "Times New Roman", serif; letter-spacing: -.025em; }
+h2 { margin: 0; font-size: 25px; line-height: 1.25; letter-spacing: -.015em; }
+h3 { margin: 0; font-size: 19px; line-height: 1.35; }
+
+.back { margin: 0 0 52px; font-size: 14px; }
+.interview-header { margin: 0 0 48px; }
+.source { margin: 0 0 9px; color: #67645e; font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.context { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 18px; color: #67645e; font-size: 14px; }
+.context span + span { position: relative; }
+.context span + span::before { position: absolute; left: -11px; content: "·"; }
+
+section { margin: 0 0 64px; }
+section > h2 { margin-bottom: 20px; }
+.summary-block { border: 1px solid #dedcd5; border-radius: 12px; background: #fff; padding: 28px 30px; }
+.summary-block h2 { margin-bottom: 18px; }
+.summary-block ul { margin: 0; padding: 0; list-style: none; }
+.summary-block li { position: relative; margin: 0; padding: 14px 0 14px 22px; border-top: 1px solid #eceae5; font-size: 16px; line-height: 1.58; }
+.summary-block li:first-child { border-top: 0; padding-top: 0; }
+.summary-block li:last-child { padding-bottom: 0; }
+.summary-block li::before { position: absolute; left: 2px; content: "•"; color: #8b877f; }
+.summary-block .overview { color: #292826; font-size: 18px; line-height: 1.55; }
+.summary-block strong { display: block; margin-bottom: 3px; font-weight: 700; }
+.summary-block span { display: block; color: #41403d; }
+
+.cleaned-transcript { margin: 0; padding: 0; list-style: none; counter-reset: transcript; }
+.cleaned-transcript > li { position: relative; padding: 27px 0 28px 44px; border-top: 1px solid #d8d6d0; counter-increment: transcript; }
+.cleaned-transcript > li:last-child { border-bottom: 1px solid #d8d6d0; }
+.cleaned-transcript > li::before { position: absolute; top: 29px; left: 0; width: 28px; color: #8a867e; content: counter(transcript, decimal-leading-zero); font-size: 12px; font-variant-numeric: tabular-nums; font-weight: 700; }
+.cleaned-transcript p { margin-top: 8px; color: #373634; line-height: 1.68; }
+.raw { margin-top: 54px; padding-top: 24px; border-top: 1px solid #bbb8b0; font-size: 17px; font-weight: 700; }
+
+.meta { margin: 6px 0 20px; color: #67645e; font-size: 14px; }
 .actions { margin: 10px 0 0; }
-.synthesis { margin: 34px 0 58px; }
-.synthesis p { margin: 0 0 20px; font-size: 18px; line-height: 1.62; }
-section { margin: 0 0 52px; }
-section > h2 { margin-bottom: 16px; }
-.summary-block { border: 1px solid #aaa; padding: 20px 22px; }
-.summary-block h2 { margin-bottom: 12px; }
-.summary-block ul { margin: 0; padding-left: 22px; }
-.summary-block li { margin: 0 0 12px; }
-.summary-block li:last-child { margin-bottom: 0; }
-.interviews, .cleaned-transcript { margin: 0; padding: 0; list-style: none; }
-.interviews > li { border-top: 1px solid #bbb; padding: 24px 0 28px; }
-.interviews > li:last-child { border-bottom: 1px solid #bbb; }
-.interviews h2 { font-size: 21px; }
-.interviews p { margin: 8px 0 0; }
-.cleaned-transcript > li { border-top: 1px solid #ccc; padding: 20px 0; }
-.cleaned-transcript > li:last-child { border-bottom: 1px solid #ccc; }
-.cleaned-transcript h3 { margin: 0; font-size: 18px; line-height: 1.35; }
-.cleaned-transcript p { margin: 7px 0 0; }
-.full-transcript .time { font-variant-numeric: tabular-nums; font-weight: 700; }
-.raw { margin-top: 42px; font-size: 18px; font-weight: 700; }
+.synthesis { margin: 38px 0 68px; }
+.synthesis p { margin: 0 0 24px; font-size: 18px; line-height: 1.68; }
+.interviews { margin: 0; padding: 0; list-style: none; }
+.interviews > li { padding: 28px 0 30px; border-top: 1px solid #cbc8c0; }
+.interviews > li:last-child { border-bottom: 1px solid #cbc8c0; }
+.interviews h2 { font-size: 22px; }
+.interviews p { margin-top: 9px; }
+
 .transcript-hero { margin-bottom: 30px; }
-.license-note { border-block: 1px solid #999; margin-bottom: 28px; padding: 14px 0; }
-.license-note p { margin: 0; }
-.full-transcript > p { margin: 0; border-top: 1px solid #ddd; padding: 14px 0; }
-.full-transcript .time { display: block; margin-bottom: 4px; font-size: 12px; }
-.end { margin-top: 36px; font-weight: 700; }
+.license-note { margin-bottom: 28px; padding: 14px 0; border-block: 1px solid #bbb8b0; }
+.full-transcript > p { margin: 0; padding: 16px 0; border-top: 1px solid #ddd; line-height: 1.68; }
+.full-transcript .time { display: block; margin-bottom: 5px; font-size: 12px; font-variant-numeric: tabular-nums; font-weight: 700; }
+.end { margin-top: 42px; font-weight: 700; }
+
 @media (max-width: 640px) {
-  main { padding: 20px 14px 64px; }
-  h1 { font-size: 27px; }
+  :root { font-size: 16px; }
+  main { padding: 28px 18px 72px; }
+  h1 { font-size: 34px; line-height: 1.12; }
+  h2 { font-size: 23px; }
+  .back { margin-bottom: 38px; }
+  .interview-header { margin-bottom: 38px; }
+  .context { gap: 5px 16px; }
+  .summary-block { border-radius: 10px; padding: 22px 20px; }
+  .summary-block li { padding-left: 18px; }
+  .summary-block .overview { font-size: 17px; }
+  .cleaned-transcript > li { padding-left: 36px; }
   .synthesis p { font-size: 17px; }
-  .summary-block { padding: 16px; }
 }
