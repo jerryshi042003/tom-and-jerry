@@ -13,6 +13,60 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "tennis-culture" / "mike-cherman"
 
+READ_FIRST = {
+    "jWC4joiHaTY", "5KhgzVrU-JM", "4XLDVLg_Rx8", "NG3SqEpqIkY",
+    "lnnGQdwfNt0", "lKKxUcky-KA", "sTp-Rh5gydg",
+}
+READ_SEQUENCE = (
+    "jWC4joiHaTY", "5KhgzVrU-JM", "4XLDVLg_Rx8", "NG3SqEpqIkY",
+    "lnnGQdwfNt0", "lKKxUcky-KA", "sTp-Rh5gydg",
+)
+READ_NEXT = {
+    "pmk_c5DpnKQ", "q7T4j22Ph_4", "TGzzXsnzdKE", "5C4AeKriXkw",
+    "b3GuvG3cDX4", "PexMQy3K4K4", "UNJMsSzxCjw", "ajV5DdiY_WE",
+    "AQqPH5oef6E", "XOAUWHLCDMs", "w0ElIfi3s0k",
+}
+
+OVERALL = (
+    "Across these interviews, Mike’s career is less a story about having the right taste than about building an operating stack. "
+    "He starts with shirts made in school, teaches himself design, uses aggressive self-promotion to get near people he wants to learn from, "
+    "and takes low-status production jobs where he can watch files become physical objects. Goodwood, the Bowery customization shop, early Kith work, "
+    "ICNY, freelance production, and Chinatown Market are not separate anecdotes. Each stage adds a capability: graphics, machinery, sourcing, retail, "
+    "wholesale, cash flow, licensing, team management, or audience feedback.\n\n"
+    "His repeatable method is: make one clear thing, put it in front of real people, produce against the response, and use what happens to decide the next move. "
+    "The most useful early Chinatown Market stories are not the large collaborations. They are the one photographed sample, the handwritten label, the blank shirts bought only after orders arrived, "
+    "and the speed of having design, printing, photography, posting, and shipping close together. Speed mattered because it shortened learning, not because every fast idea was good. "
+    "The Frank Ocean refund, offensive or careless releases, and the later name change show what happens when speed outruns legal or ethical judgment.\n\n"
+    "Mike consistently chooses access over streetwear purity. He wanted MARKET in stores ordinary people used, wanted the social account to feel like a person, and built live customization and Discord programs where customers could contribute instead of only buy. "
+    "The smiley basketball is the cleanest example of the product philosophy: take an object people already understand, keep it functional, and change its cultural meaning enough that it can live in sport, fashion, play, and collecting at once. "
+    "For Tom, tennis equipment and court rituals offer the same opening—but only if the object still works and the tennis community is treated as a participant rather than scenery.\n\n"
+    "The interviews are also unusually candid about the cost of growth. Mike lost ICNY, misunderstood revenue as profit, entered partnerships before terms were clear, hired people faster than he knew how to manage them, and learned that not every early teammate fits every stage. "
+    "His better later advice is concrete: contracts before committed labor; small runs before inventory; roles before enthusiasm; trusted production partners; and feedback from people qualified to disagree. "
+    "He sees former employees building their own companies as part of MARKET’s result, even when the relationship ended badly.\n\n"
+    "What Tom should take to Mike is therefore not a broad request for mentorship and not a polished mood board. Bring one finished tennis object, the failed samples that explain its decisions, a short record of how an actual player used it, the production constraint still unresolved, and one precise question. "
+    "A strong ask would be: ‘Here is the object, here is what changed after ten players touched it, and here is the one production or community decision I cannot resolve. What am I missing?’ "
+    "That approach matches what Mike repeatedly rewards: visible initiative, proximity to the craft, willingness to show the miss, and enough operating seriousness that his answer has somewhere to go."
+)
+
+EXTENDED_QUOTES = {
+    "NG3SqEpqIkY": (
+        "00:16:46–00:17:43",
+        "That’s why my employees should have equity. That’s why they should be involved. That’s why it’s not just me on the highway. "
+        "Even when we had to change our name during this year, it was basically one of those moments where I sat with my team and I gave them the opportunity to tell me what they felt first, before I just made a decision for the company, before I decided where we went. "
+        "I think it’s really positive because it’s less about a rebrand and more about recognizing who we’ve always been. We are the market of the internet. We are the market of the people. "
+        "We’ve given a platform to kids to be able to be safe in a safe space on the internet. It’s a safe space, as far as clothing brands go, because this is a community that you can share in—give and take—not just we give you and you receive. "
+        "It’s funny, we run a Discord channel where kids can all engage. It’s very much like old-forum kind of vibe. Two kids from our Discord started dating, and we just ran a Discord design challenge, and these kids are submitting the sickest designs I’ve seen."
+    )
+}
+
+
+def reading_verdict(video_id: str, note: dict) -> tuple[str, str]:
+    if video_id in READ_FIRST:
+        return "Read first", note["tom"]
+    if video_id in READ_NEXT:
+        return "Read if this angle matters", note["tom"]
+    return "Skip for now", note["tom"]
+
 
 def clock(seconds: int) -> str:
     hours, rest = divmod(max(0, int(seconds)), 3600)
@@ -25,6 +79,14 @@ def source_url(video_id: str, seconds: int | None = None) -> str:
     return f"{url}&amp;t={seconds}s" if seconds is not None else url
 
 
+def raw_access(record: dict) -> tuple[str, str]:
+    if record.get("full_transcript_path"):
+        return html.escape(record["full_transcript_path"]), "Raw transcript"
+    if record["transcript_source"].casefold() == "youtube captions":
+        return source_url(record["id"]), "Raw transcript on YouTube"
+    return source_url(record["id"]), "Source recording"
+
+
 def render_licensed_transcript(record: dict, article_html: str) -> str:
     """Render a publisher-licensed caption transcript with explicit attribution."""
     return f'''<!doctype html>
@@ -33,16 +95,14 @@ def render_licensed_transcript(record: dict, article_html: str) -> str:
 <meta name="description" content="Complete timestamped publisher caption transcript for {html.escape(record['title'])}.">
 <link rel="stylesheet" href="../styles.css"></head>
 <body><main>
-  <p class="top"><a href="../{record['id']}.html">← Interview summary and cleaned stories</a></p>
-  <header class="hero transcript-hero">
-    <p class="eyebrow">Complete timestamped caption transcript · {record['date']} · {clock(record['duration'])}</p>
+  <p class="back"><a href="../{record['id']}.html">← Interview notes</a></p>
+  <header class="transcript-hero">
     <h1>{html.escape(record['title'])}</h1>
-    <p class="byline">{html.escape(record['channel'])}</p>
-    <p class="summary">This is the full publisher caption sequence, separated from the edited interview notes so the complete source wording remains readable when needed.</p>
+    <p class="meta">Raw transcript · {html.escape(record['channel'])} · {record['date']} · {clock(record['duration'])}</p>
   </header>
-  <section class="license-note"><p><b>Attribution.</b> “{html.escape(record['title'])},” by {html.escape(record['channel'])}, <a href="{source_url(record['id'])}" target="_blank" rel="noopener">published on YouTube</a> under {html.escape(record['license'])}. YouTube identifies Creative Commons uploads as reusable subject to CC BY attribution. Captions may contain machine errors; verify the recording before quoting.</p></section>
+  <p class="license-note">{html.escape(record['license'])} · <a href="{source_url(record['id'])}" target="_blank" rel="noopener">source</a></p>
   <article class="full-transcript">{article_html}</article>
-  <p class="end"><a href="{source_url(record['id'])}" target="_blank" rel="noopener">Watch the source recording ↗</a></p>
+  <p class="end"><a href="{source_url(record['id'])}" target="_blank" rel="noopener">Watch →</a></p>
 </main></body></html>'''
 
 
@@ -72,6 +132,7 @@ def build_licensed_transcripts(records: list[dict]) -> None:
 
 
 def render_page(record: dict, note: dict, cleaned_sections: list[list]) -> str:
+    verdict, reason = reading_verdict(record["id"], note)
     moments = "\n".join(
         f'''<li id="t{second}">
           <a class="time" href="{source_url(record['id'], second)}" target="_blank" rel="noopener">{clock(second)}</a>
@@ -79,103 +140,69 @@ def render_page(record: dict, note: dict, cleaned_sections: list[list]) -> str:
         </li>'''
         for second, label, body in note["moments"]
     )
-    note_text = record.get("note")
-    source_note = f'<p class="source-note">{html.escape(note_text)}</p>' if note_text else ""
-    cleaned_transcript = ""
-    if cleaned_sections:
-        cleaned_blocks = "\n".join(
-            f'''<li id="cleaned-t{second}">
+    cleaned_blocks = "\n".join(
+        f'''<li id="cleaned-t{second}">
           <a class="time" href="{source_url(record['id'], second)}" target="_blank" rel="noopener">{clock(second)}</a>
           <div><h2>{html.escape(label)}</h2><p>{html.escape(body)}</p></div>
         </li>'''
-            for second, label, body in cleaned_sections
-        )
-        cleaned_transcript = f'''<section class="cleaned-reading">
-    <p class="section-label">Cleaned interview</p>
-    <p class="reading-note">Complete chronological reading notes for this recording. The wording is edited and paraphrased for clarity; timestamps open the source and these paragraphs should not be quoted as Mike’s exact words.</p>
-    <ol class="cleaned-transcript">{cleaned_blocks}</ol>
-  </section>'''
-    if record.get("full_transcript_path"):
-        transcript_access = (
-            f'<p><a class="transcript-link" href="{html.escape(record["full_transcript_path"])}">'
-            "Read the complete timestamped transcript →</a></p>"
-            f'<p>The publisher released this recording under {html.escape(record["license"])}. '
-            "The complete caption sequence is therefore reproduced with title, creator, source, and license attribution.</p>"
-        )
-    elif record["transcript_source"].casefold() == "youtube captions":
-        transcript_access = (
-            f'<p>This recording has a publisher-served YouTube caption track. '
-            f'<a href="{source_url(record["id"])}" target="_blank" rel="noopener">Open the video</a>, '
-            "then use YouTube’s <b>Show transcript</b> control to read the raw caption sequence.</p>"
-        )
-    else:
-        transcript_access = (
-            f'<p>The source does not expose a usable public English transcript. '
-            f'<a href="{source_url(record["id"])}" target="_blank" rel="noopener">Open the recording</a>. '
-            "The local machine transcript was used for these notes but is not republished as an authoritative source text.</p>"
-        )
+        for second, label, body in cleaned_sections
+    )
+    raw_url, raw_label = raw_access(record)
+    extended = ""
+    if record["id"] in EXTENDED_QUOTES:
+        span, quote = EXTENDED_QUOTES[record["id"]]
+        extended = f'''<blockquote class="extended"><p>“{html.escape(quote)}”</p><cite><a href="{source_url(record['id'], 1006)}" target="_blank" rel="noopener">Extended CC-licensed excerpt · {span}</a></cite></blockquote>'''
     return f'''<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{html.escape(record['title'])} — Mike Cherman Interviews</title>
 <meta name="description" content="Cleaned notes and Tom-specific takeaways from {html.escape(record['title'])}.">
 <link rel="stylesheet" href="styles.css"></head>
 <body><main>
-  <p class="top"><a href="./">← All Mike interviews</a></p>
-  <header class="hero">
-    <p class="eyebrow">{html.escape(record['format'])} · {record['date']} · {clock(record['duration'])}</p>
+  <p class="back"><a href="./">← All interviews</a></p>
+  <header>
     <h1>{html.escape(record['title'])}</h1>
-    <p class="byline">{html.escape(record['channel'])}</p>
+    <p class="meta">{html.escape(record['channel'])} · {record['date']} · {clock(record['duration'])} · {html.escape(record['format'])}</p>
     <p class="summary">{html.escape(note['summary'])}</p>
-    <p><a href="{source_url(record['id'])}" target="_blank" rel="noopener">Watch the original on YouTube ↗</a></p>
+    <p class="actions"><a href="{source_url(record['id'])}" target="_blank" rel="noopener">Watch</a> · <a href="{raw_url}" target="_blank" rel="noopener">{raw_label}</a></p>
   </header>
-  <blockquote><p>“{html.escape(note['quote'])}”</p><cite><a href="{source_url(record['id'], note['quote_t'])}" target="_blank" rel="noopener">Caption excerpt · {clock(note['quote_t'])}</a></cite></blockquote>
-  <section class="tom-card"><p class="eyebrow">What Tom should take from this</p><p>{html.escape(note['tom'])}</p></section>
-  <section><p class="section-label">Interview details and stories</p><ol class="moments">{moments}</ol></section>
-{cleaned_transcript}
-{source_note}
-  <details class="transcript-access"><summary>Raw transcript access</summary>{transcript_access}</details>
-  <section class="method"><p><b>Editorial method.</b> These are source-faithful paraphrases made from public captions or local speech recognition, not a verbatim transcript. Timestamps open the exact recording position. Verify the source before quoting Mike.</p></section>
+  <section class="verdict"><h2>{verdict}</h2><p>{html.escape(reason)}</p></section>
+  <section><h2>Mike, exactly</h2><blockquote><p>“{html.escape(note['quote'])}”</p><cite><a href="{source_url(record['id'], note['quote_t'])}" target="_blank" rel="noopener">{clock(note['quote_t'])}</a></cite></blockquote>{extended}</section>
+  <section><h2>Best stories and insights</h2><ol class="moments">{moments}</ol></section>
+  <section><h2>Full interview, in order</h2><ol class="cleaned-transcript">{cleaned_blocks}</ol></section>
+  <p class="raw"><a href="{raw_url}" target="_blank" rel="noopener">{raw_label} →</a></p>
 </main></body></html>'''
 
 
 def render_index(records: list[dict], notes: dict) -> str:
-    def cards(tier: str) -> str:
-        def searchable(record: dict) -> str:
-            note = notes[record["id"]]
-            moment_text = " ".join(f"{label} {body}" for _, label, body in note["moments"])
-            return " ".join((record["title"], record["channel"], note["summary"], note["tom"], moment_text)).lower()
+    def priority(record: dict) -> tuple[int, str, str]:
+        if record["id"] in READ_FIRST:
+            return 0, f"{READ_SEQUENCE.index(record['id']):02d}", record["id"]
+        rank = 1 if record["id"] in READ_NEXT else 2
+        return rank, record["date"], record["id"]
 
-        return "\n".join(
-            f'''<li data-search="{html.escape(searchable(r))}">
-              <p class="eyebrow">{r['date']} · {html.escape(r['format'])} · {clock(r['duration'])}</p>
-              <h2><a href="{r['id']}.html">{html.escape(r['title'])}</a></h2>
-              <p>{html.escape(notes[r['id']]['summary'])}</p>
-              <a class="detail" href="{r['id']}.html">Notes + Tom insight →</a>
-            </li>'''
-            for r in records if r["tier"] == tier
-        )
-
+    cards = []
+    for record in sorted(records, key=priority):
+        note = notes[record["id"]]
+        verdict, reason = reading_verdict(record["id"], note)
+        raw_url, raw_label = raw_access(record)
+        cards.append(f'''<li>
+      <h2><a href="{record['id']}.html">{html.escape(record['title'])}</a></h2>
+      <p class="meta">{html.escape(record['channel'])} · {record['date']} · {clock(record['duration'])}</p>
+      <p><b>{verdict}.</b> {html.escape(reason)}</p>
+      <p>{html.escape(note['summary'])}</p>
+      <p class="actions"><a href="{record['id']}.html">Open notes</a> · <a href="{raw_url}" target="_blank" rel="noopener">{raw_label}</a></p>
+    </li>''')
+    synthesis = "".join(f"<p>{html.escape(paragraph)}</p>" for paragraph in OVERALL.split("\n\n"))
     return f'''<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Mike Cherman Interviews — Jerry / Tom</title>
+<title>Mike Cherman interviews</title>
 <meta name="description" content="Twenty-eight Mike Cherman interviews and appearances, cleaned into timestamped notes and practical insights for Tom.">
 <link rel="stylesheet" href="styles.css"></head>
 <body><main>
-  <p class="top"><a href="../">← Jerry / Tom board</a></p>
-  <header class="hero">
-    <p class="eyebrow">Jerry / Tom · Interviews</p>
-    <h1>Mike Cherman interviews</h1>
-    <p class="summary">Twenty-eight public interviews and substantive appearances. Together they trace Mike from homemade school shirts and ICNY through Chinatown Market, MARKET, teams, collaborations, physical retail, sports objects, community, and the responsibilities that came with growth.</p>
-    <p class="scope">22 direct interviews, podcasts, and panels · 6 adjacent first-person appearances · searched 10 August 2026</p>
-  </header>
-  <section class="corpus-summary">
-    <p class="section-label">What the full set says</p>
-    <p>Mike’s recurring method is simple: make one thing, put it in front of people, learn the operational work behind it, and use the response to make the next thing. The interviews repeatedly return to five tensions: access versus exclusivity; fast cultural response versus legal and ethical responsibility; founder control versus giving a team room; collaboration excitement versus contracts and ownership; and a product’s image versus the community and physical work that make it real.</p>
-    <p>For Tom, the useful pattern is not “start a streetwear brand.” It is to arrive with a finished tennis object, document how it was made, know who it serves, invite a real participant into the process, and ask Mike for one concrete criticism. The archive also argues for boundaries: keep authorship clear, define the pilot, and do not let enthusiasm become unlimited unpaid development.</p>
-  </section>
-  <section><p class="section-label">Direct interviews, podcasts, and panels</p><ol class="interviews" id="core">{cards('core')}</ol></section>
-  <section><p class="section-label">Adjacent first-person appearances</p><p class="scope">Included because Mike speaks substantively; kept separate so a workshop, tour, or campaign is not mislabeled as an interview.</p><ol class="interviews" id="adjacent">{cards('adjacent')}</ol></section>
-  <section class="method"><p><b>Coverage.</b> “Every” means every qualifying result recovered by the documented twelve-query YouTube sweep. Ranked search is not a perfect global index. <a href="SOURCES.md">Read the inclusion rule, exclusions, and transcript method.</a></p></section>
+  <h1>Mike Cherman</h1>
+  <p class="meta">28 public interviews and substantive appearances</p>
+  <div class="synthesis">{synthesis}</div>
+  <ol class="interviews">{''.join(cards)}</ol>
 </main></body></html>'''
 
 
