@@ -48,18 +48,6 @@ OVERALL = (
     "That approach matches what Mike repeatedly rewards: visible initiative, proximity to the craft, willingness to show the miss, and enough operating seriousness that his answer has somewhere to go."
 )
 
-EXTENDED_QUOTES = {
-    "NG3SqEpqIkY": (
-        "00:16:46–00:17:43",
-        "That’s why my employees should have equity. That’s why they should be involved. That’s why it’s not just me on the highway. "
-        "Even when we had to change our name during this year, it was basically one of those moments where I sat with my team and I gave them the opportunity to tell me what they felt first, before I just made a decision for the company, before I decided where we went. "
-        "I think it’s really positive because it’s less about a rebrand and more about recognizing who we’ve always been. We are the market of the internet. We are the market of the people. "
-        "We’ve given a platform to kids to be able to be safe in a safe space on the internet. It’s a safe space, as far as clothing brands go, because this is a community that you can share in—give and take—not just we give you and you receive. "
-        "It’s funny, we run a Discord channel where kids can all engage. It’s very much like old-forum kind of vibe. Two kids from our Discord started dating, and we just ran a Discord design challenge, and these kids are submitting the sickest designs I’ve seen."
-    )
-}
-
-
 def reading_verdict(video_id: str, note: dict) -> tuple[str, str]:
     if video_id in READ_FIRST:
         return "Read first", note["tom"]
@@ -132,43 +120,35 @@ def build_licensed_transcripts(records: list[dict]) -> None:
 
 
 def render_page(record: dict, note: dict, cleaned_sections: list[list]) -> str:
-    verdict, reason = reading_verdict(record["id"], note)
-    moments = "\n".join(
-        f'''<li id="t{second}">
-          <a class="time" href="{source_url(record['id'], second)}" target="_blank" rel="noopener">{clock(second)}</a>
-          <div><h2>{html.escape(label)}</h2><p>{html.escape(body)}</p></div>
-        </li>'''
-        for second, label, body in note["moments"]
+    summary_bullets = [
+        f'''<li><b>What this is:</b> {html.escape(note["summary"])}</li>''',
+        f'''<li><b>Context:</b> A {clock(record["duration"])} {html.escape(record["format"])} published by {html.escape(record["channel"])} on {record["date"]}.</li>''',
+    ]
+    summary_bullets.extend(
+        f'''<li><b>{html.escape(label)}.</b> {html.escape(body)}</li>'''
+        for _, label, body in note["moments"]
     )
     cleaned_blocks = "\n".join(
         f'''<li id="cleaned-t{second}">
-          <a class="time" href="{source_url(record['id'], second)}" target="_blank" rel="noopener">{clock(second)}</a>
-          <div><h2>{html.escape(label)}</h2><p>{html.escape(body)}</p></div>
+          <h3>{html.escape(label)}</h3>
+          <p>{html.escape(body)}</p>
         </li>'''
         for second, label, body in cleaned_sections
     )
     raw_url, raw_label = raw_access(record)
-    extended = ""
-    if record["id"] in EXTENDED_QUOTES:
-        span, quote = EXTENDED_QUOTES[record["id"]]
-        extended = f'''<blockquote class="extended"><p>“{html.escape(quote)}”</p><cite><a href="{source_url(record['id'], 1006)}" target="_blank" rel="noopener">Extended CC-licensed excerpt · {span}</a></cite></blockquote>'''
     return f'''<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{html.escape(record['title'])} — Mike Cherman Interviews</title>
-<meta name="description" content="Cleaned notes and Tom-specific takeaways from {html.escape(record['title'])}.">
+<meta name="description" content="Context, summary, and chronological transcript notes for {html.escape(record['title'])}.">
 <link rel="stylesheet" href="styles.css"></head>
 <body><main>
   <p class="back"><a href="./">← All interviews</a></p>
   <header>
     <h1>{html.escape(record['title'])}</h1>
     <p class="meta">{html.escape(record['channel'])} · {record['date']} · {clock(record['duration'])} · {html.escape(record['format'])}</p>
-    <p class="summary">{html.escape(note['summary'])}</p>
-    <p class="actions"><a href="{source_url(record['id'])}" target="_blank" rel="noopener">Watch</a> · <a href="{raw_url}" target="_blank" rel="noopener">{raw_label}</a></p>
   </header>
-  <section class="verdict"><h2>{verdict}</h2><p>{html.escape(reason)}</p></section>
-  <section><h2>Mike, exactly</h2><blockquote><p>“{html.escape(note['quote'])}”</p><cite><a href="{source_url(record['id'], note['quote_t'])}" target="_blank" rel="noopener">{clock(note['quote_t'])}</a></cite></blockquote>{extended}</section>
-  <section><h2>Best stories and insights</h2><ol class="moments">{moments}</ol></section>
-  <section><h2>Full interview, in order</h2><ol class="cleaned-transcript">{cleaned_blocks}</ol></section>
+  <section class="summary-block"><h2>Summary</h2><ul>{''.join(summary_bullets)}</ul></section>
+  <section><h2>Transcript summary</h2><ol class="cleaned-transcript">{cleaned_blocks}</ol></section>
   <p class="raw"><a href="{raw_url}" target="_blank" rel="noopener">{raw_label} →</a></p>
 </main></body></html>'''
 
@@ -215,9 +195,6 @@ def main() -> None:
     ids = {record["id"] for record in records}
     if set(notes) != ids:
         raise ValueError(f"notes/manifest mismatch: missing={sorted(ids-set(notes))}, extra={sorted(set(notes)-ids)}")
-    oversized = {video_id: len(note["quote"].split()) for video_id, note in notes.items() if len(note["quote"].split()) > 24}
-    if oversized:
-        raise ValueError(f"caption excerpts exceed 24 words: {oversized}")
     if set(cleaned) != ids:
         raise ValueError(
             f"cleaned/manifest mismatch: missing={sorted(ids-set(cleaned))}, extra={sorted(set(cleaned)-ids)}"

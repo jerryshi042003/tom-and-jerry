@@ -9,29 +9,26 @@ p { max-width: 760px; }
 header { margin: 0 0 42px; }
 .back { margin: 0 0 32px; }
 .meta { margin: 4px 0 18px; color: #555; font-size: 14px; }
-.summary { margin: 0 0 14px; font-size: 18px; line-height: 1.55; }
 .actions { margin: 10px 0 0; }
 .synthesis { margin: 34px 0 58px; }
 .synthesis p { margin: 0 0 20px; font-size: 18px; line-height: 1.62; }
 section { margin: 0 0 52px; }
 section > h2 { margin-bottom: 16px; }
-.verdict { border-block: 1px solid #aaa; padding: 18px 0; }
-.verdict h2 { margin: 0 0 6px; }
-.verdict p { margin: 0; font-size: 18px; }
-blockquote { margin: 0 0 28px; border-left: 3px solid #222; padding-left: 16px; }
-blockquote p { margin: 0 0 7px; font-size: 20px; line-height: 1.5; }
-blockquote cite { color: #555; font-size: 13px; font-style: normal; }
-blockquote.extended { margin-top: 30px; }
-blockquote.extended p { font-size: 17px; }
-.interviews, .moments, .cleaned-transcript { margin: 0; padding: 0; list-style: none; }
+.summary-block { border: 1px solid #aaa; padding: 20px 22px; }
+.summary-block h2 { margin-bottom: 12px; }
+.summary-block ul { margin: 0; padding-left: 22px; }
+.summary-block li { margin: 0 0 12px; }
+.summary-block li:last-child { margin-bottom: 0; }
+.interviews, .cleaned-transcript { margin: 0; padding: 0; list-style: none; }
 .interviews > li { border-top: 1px solid #bbb; padding: 24px 0 28px; }
 .interviews > li:last-child { border-bottom: 1px solid #bbb; }
 .interviews h2 { font-size: 21px; }
 .interviews p { margin: 8px 0 0; }
-.moments > li, .cleaned-transcript > li { display: grid; grid-template-columns: 78px minmax(0, 1fr); gap: 16px; border-top: 1px solid #ccc; padding: 20px 0; }
-.moments > li:last-child, .cleaned-transcript > li:last-child { border-bottom: 1px solid #ccc; }
-.moments .time, .cleaned-transcript .time, .full-transcript .time { font-variant-numeric: tabular-nums; font-weight: 700; }
-.moments p, .cleaned-transcript p { margin: 7px 0 0; }
+.cleaned-transcript > li { border-top: 1px solid #ccc; padding: 20px 0; }
+.cleaned-transcript > li:last-child { border-bottom: 1px solid #ccc; }
+.cleaned-transcript h3 { margin: 0; font-size: 18px; line-height: 1.35; }
+.cleaned-transcript p { margin: 7px 0 0; }
+.full-transcript .time { font-variant-numeric: tabular-nums; font-weight: 700; }
 .raw { margin-top: 42px; font-size: 18px; font-weight: 700; }
 .transcript-hero { margin-bottom: 30px; }
 .license-note { border-block: 1px solid #999; margin-bottom: 28px; padding: 14px 0; }
@@ -43,5 +40,5 @@ blockquote.extended p { font-size: 17px; }
   main { padding: 20px 14px 64px; }
   h1 { font-size: 27px; }
   .synthesis p { font-size: 17px; }
-  .moments > li, .cleaned-transcript > li { grid-template-columns: 1fr; gap: 6px; }
+  .summary-block { padding: 16px; }
 }
