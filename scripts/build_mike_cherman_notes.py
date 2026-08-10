@@ -12,6 +12,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "tennis-culture" / "mike-cherman"
+RELEASE = "20260810-readable"
 
 READ_FIRST = {
     "jWC4joiHaTY", "5KhgzVrU-JM", "4XLDVLg_Rx8", "NG3SqEpqIkY",
@@ -69,7 +70,7 @@ def source_url(video_id: str, seconds: int | None = None) -> str:
 
 def raw_access(record: dict) -> tuple[str, str]:
     if record.get("full_transcript_path"):
-        return html.escape(record["full_transcript_path"]), "Raw transcript"
+        return f'{html.escape(record["full_transcript_path"])}?v={RELEASE}', "Raw transcript"
     if record["transcript_source"].casefold() == "youtube captions":
         return source_url(record["id"]), "Raw transcript on YouTube"
     return source_url(record["id"]), "Source recording"
@@ -81,9 +82,9 @@ def render_licensed_transcript(record: dict, article_html: str) -> str:
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Full transcript — {html.escape(record['title'])}</title>
 <meta name="description" content="Complete timestamped publisher caption transcript for {html.escape(record['title'])}.">
-<link rel="stylesheet" href="../styles.css"></head>
+<link rel="stylesheet" href="../styles.css?v={RELEASE}"></head>
 <body><main>
-  <p class="back"><a href="../{record['id']}.html">← Interview notes</a></p>
+  <p class="back"><a href="../{record['id']}.html?v={RELEASE}">← Interview notes</a></p>
   <header class="transcript-hero">
     <h1>{html.escape(record['title'])}</h1>
     <p class="meta">Raw transcript · {html.escape(record['channel'])} · {record['date']} · {clock(record['duration'])}</p>
@@ -147,9 +148,9 @@ def render_page(record: dict, note: dict, cleaned_sections: list[list]) -> str:
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{html.escape(record['title'])} — Mike Cherman Interviews</title>
 <meta name="description" content="Context, summary, and chronological transcript notes for {html.escape(record['title'])}.">
-<link rel="stylesheet" href="styles.css"></head>
+<link rel="stylesheet" href="styles.css?v={RELEASE}"></head>
 <body><main>
-  <p class="back"><a href="./">← All interviews</a></p>
+  <p class="back"><a href="./?v={RELEASE}">← All interviews</a></p>
   <header class="interview-header">
     <p class="source">{html.escape(record['channel'])}</p>
     <h1>{html.escape(record['title'])}</h1>
@@ -174,18 +175,18 @@ def render_index(records: list[dict], notes: dict) -> str:
         verdict, reason = reading_verdict(record["id"], note)
         raw_url, raw_label = raw_access(record)
         cards.append(f'''<li>
-      <h2><a href="{record['id']}.html">{html.escape(record['title'])}</a></h2>
+      <h2><a href="{record['id']}.html?v={RELEASE}">{html.escape(record['title'])}</a></h2>
       <p class="meta">{html.escape(record['channel'])} · {record['date']} · {clock(record['duration'])}</p>
       <p><b>{verdict}.</b> {html.escape(reason)}</p>
       <p>{html.escape(note['summary'])}</p>
-      <p class="actions"><a href="{record['id']}.html">Open notes</a> · <a href="{raw_url}" target="_blank" rel="noopener">{raw_label}</a></p>
+      <p class="actions"><a href="{record['id']}.html?v={RELEASE}">Open notes</a> · <a href="{raw_url}" target="_blank" rel="noopener">{raw_label}</a></p>
     </li>''')
     synthesis = "".join(f"<p>{html.escape(paragraph)}</p>" for paragraph in OVERALL.split("\n\n"))
     return f'''<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Mike Cherman interviews</title>
 <meta name="description" content="Twenty-eight Mike Cherman interviews and appearances, cleaned into timestamped notes and practical insights for Tom.">
-<link rel="stylesheet" href="styles.css"></head>
+<link rel="stylesheet" href="styles.css?v={RELEASE}"></head>
 <body><main>
   <h1>Mike Cherman</h1>
   <p class="meta">28 public interviews and substantive appearances</p>
