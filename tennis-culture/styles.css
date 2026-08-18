@@ -4,24 +4,30 @@ body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 15px;
-  line-height: 1.48;
+  line-height: 1.62;
 }
 main {
-  width: min(900px, 100%);
+  width: min(760px, 100%);
   margin: 0 auto;
-  padding: 28px 18px 96px;
+  padding: 56px 22px 120px;
 }
-p, ul, figure { margin: 0 0 30px; }
-ul { padding-left: 20px; }
-ul ul { margin: 7px 0 14px; }
-li + li { margin-top: 7px; }
-a { color: inherit; text-underline-offset: 2px; }
+p, ul, figure { margin: 0 0 26px; }
+ul { padding-left: 21px; }
+ul ul { margin: 10px 0 16px; }
+li { padding-left: 2px; }
+li + li { margin-top: 11px; }
+a { color: inherit; text-underline-offset: 3px; }
 q { quotes: "“" "”"; }
+.s {
+  margin: 64px 0 20px;
+  letter-spacing: 0.07em;
+}
 .pictures {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 22px;
-  margin: 40px 0;
+  gap: 26px;
+  align-items: start;
+  margin: 34px 0 40px;
 }
 .pictures figure { margin: 0; }
 img { display: block; width: 100%; height: auto; }
@@ -32,10 +38,11 @@ img { display: block; width: 100%; height: auto; }
   border: 0;
   background: #fff;
 }
-figcaption { margin-top: 7px; }
-.end { margin-top: 46px; }
+figcaption { margin-top: 10px; }
+.end { margin-top: 80px; }
 @media (max-width: 640px) {
-  main { padding: 18px 14px 72px; }
-  .pictures { grid-template-columns: 1fr; gap: 28px; margin: 32px 0; }
+  main { padding: 32px 18px 88px; }
+  .s { margin: 52px 0 18px; }
+  .pictures { grid-template-columns: 1fr; gap: 30px; margin: 30px 0 34px; }
   .instagram { height: 620px; }
 }
