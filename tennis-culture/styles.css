@@ -4,7 +4,7 @@ body {
   margin: 0;
   font-family: "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
   font-size: 15px;
-  line-height: 1.7;
+  line-height: 1.65;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 }
@@ -13,11 +13,10 @@ main {
   margin: 0 auto;
   padding: 92px 24px 170px;
 }
-p, ul, figure { margin: 0 0 24px; }
+p, ul, figure { margin: 0 0 22px; }
 ul { padding-left: 19px; }
-ul ul { margin: 9px 0 14px; }
 li { padding-left: 3px; }
-li + li { margin-top: 10px; }
+li + li { margin-top: 12px; }
 a { color: inherit; text-underline-offset: 3px; text-decoration-thickness: 1px; }
 a:hover { text-decoration-thickness: 2px; }
 q { quotes: "“" "”"; }
@@ -29,14 +28,21 @@ q { quotes: "“" "”"; }
   flex-direction: column;
   gap: 10px;
 }
-.d { margin: 78px 0 18px; }
-.d + .d { margin-top: 44px; }
+.d { margin: 84px 0 20px; }
+.d + .d { margin-top: 46px; }
+.ar { display: block; margin: 2px 0 8px 14px; }
+.in0 { margin: 0 0 6px; max-width: 540px; }
+.in1 { margin: 0 0 6px 34px; max-width: 540px; }
+.in2 { margin: 0 0 6px 12px; max-width: 540px; }
+svg.in1 { margin-left: 48px; }
+svg.in2 { margin-left: 26px; }
+.gap { margin-top: 44px; }
 .pair {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 24px;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: 22px;
   align-items: start;
-  margin: 0 0 40px;
+  margin: 0 0 44px;
 }
 .pair p, .pair figure { margin: 0; }
 .pictures {
@@ -62,9 +68,13 @@ figcaption { margin-top: 10px; line-height: 1.5; }
 }
 @media (max-width: 640px) {
   main { padding: 44px 18px 110px; }
-  .d { margin: 60px 0 16px; }
-  .pair { grid-template-columns: 1fr; gap: 16px; margin: 0 0 34px; }
-  .pair figure { margin-top: 4px; }
+  .d { margin: 64px 0 16px; }
+  .in1 { margin-left: 18px; }
+  .in2 { margin-left: 8px; }
+  svg.in1 { margin-left: 30px; }
+  svg.in2 { margin-left: 20px; }
+  .pair { grid-template-columns: 1fr; gap: 14px; margin: 0 0 36px; }
+  .pair figure { margin-top: 6px; }
   .pictures { grid-template-columns: 1fr; gap: 28px; }
   .instagram { height: 610px; }
 }
