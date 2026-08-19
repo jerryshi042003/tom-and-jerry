@@ -30,6 +30,9 @@ q { quotes: "“" "”"; }
 }
 .d { margin: 84px 0 20px; }
 .d + .d { margin-top: 46px; }
+.m { margin: 46px 0 12px; }
+.ln { margin: 0 0 9px; max-width: 560px; }
+.gp { margin-top: 40px; }
 .ar { display: block; margin: 2px 0 8px 14px; }
 .in0 { margin: 0 0 6px; max-width: 540px; }
 .in1 { margin: 0 0 6px 34px; max-width: 540px; }
@@ -62,6 +65,8 @@ img { display: block; width: 100%; height: auto; }
   background: #fff;
 }
 figcaption { margin-top: 10px; line-height: 1.5; }
+#phmap { overflow-x: auto; }
+#phmap svg { min-width: 560px; display: block; }
 .end { margin-top: 104px; }
 @media (max-width: 1120px) {
   .tab { position: static; flex-direction: row; gap: 20px; margin: 0 0 44px; }

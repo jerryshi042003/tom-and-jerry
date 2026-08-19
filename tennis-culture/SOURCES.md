@@ -206,3 +206,11 @@ Checked live 19 August 2026; none of these venues has been contacted.
 - PCA courts, Paco: [Global Tennis Network listing](https://www.globaltennisnetwork.com/tennis-courts/courts/tennis-court-page/court/51049-pca-tennis-courts).
 - LAX–MNL nonstop service and fare range (Philippine Airlines, ~15h40m, 17 weekly; recent round trips roughly $680–1,160): airline and aggregator listings via [Google Flights](https://www.google.com/travel/flights/flights-from-los-angeles-to-manila.html), checked 19 August 2026. Fares move; treat as a snapshot, same method as the 9 August airfare snapshots below.
 - Delta standby-pass marketplace check (Craigslist Los Angeles and SF Bay, Facebook Marketplace Los Angeles, 18 August 2026): zero live airline-pass listings; searches return unrelated "pass" items only.
+
+### Update 19 August 2026 (second pass)
+
+- Peso conversion at roughly ₱62 to the US dollar (USD/PHP ~61.8 on 18 Aug 2026): [Trading Economics PHP quote](https://tradingeconomics.com/philippines/currency).
+- Court map positions: Google Maps place lookups (Rizal Memorial complex 14.562, 120.994; MWSS Tennis Court 14.656, 121.076; Rancho Estate 1 area ≈14.643, 121.125) and OpenStreetMap/Nominatim (PCA 14.582, 121.000; UP Diliman campus 14.650, 121.068; Valle Verde CC 14.576, 121.067), all read 19 August 2026. Distances are straight-line haversine from Rizal Memorial; the map is a sketch, not navigation.
+- Felicisimo Ampon (Davis Cup 1939–1968, Philippine records): [PSC sports-hero profile](https://psc.gov.ph/psc_site/phisportshero-felicisimo-ampon/) and [Davis Cup player page](https://www.daviscup.com/en/players/07e8cb72-8321-4b45-b8d4-4aac9b4fa199).
+- The Courts founders Adil Dara and Leah Goren: [Tennis.com feature](https://www.tennis.com/news/articles/the-courts-where-more-than-just-tennis-is-served).
+- Rocco Arena and Chris Papa are recorded from Jerry's account (dictation spellings); Andrew Llagan and Evan Zhu are named as outreach channels, not confirmed contacts.
