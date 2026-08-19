@@ -194,3 +194,15 @@ These are summaries of Choe’s first-person accounts, not independently verifie
 - [Canary Yellow](https://canary---yellow.com/) — directly inspected 9 August 2026. It confirms the same object-first spacing, but its retail navigation and display title were rejected.
 
 The resulting rule is narrower than “copy Virgil”: black and white, one readable type size, linked bullets, source images, no navigation, no hero, no cards, no controls, and no decorative copy. The page does not copy Virgil Abloh’s visual identity, lettering, color, or branding.
+
+## Philippines trip planning — added 19 August 2026
+
+Checked live 19 August 2026; none of these venues has been contacted.
+
+- Rizal Memorial Tennis Center renovation for the January 2026 Philippine Women's Open (WTA 125): [Philstar, 22 Jan 2026](https://www.philstar.com/sports/2026/01/22/2502781/rizal-memorial-tennis-center-renovated-time-historic-philippine-womens-open).
+- Felicisimo Ampon Tennis Court public booking, ₱600/hour daytime and ₱1,000/hour evenings: [Philippine Sports Commission reservations](https://play.psc.gov.ph/) and [Radar PH](https://radar.ph/game-set-match-rizal-memorial-tennis-courts-open-to-the-public/).
+- Alex Eala's start on the shell courts of Valle Verde Country Club, Pasig, first coached by grandfather Roberto "Bobby" Maniego: [Manila Bulletin, 13 Aug 2025](https://mb.com.ph/2025/08/13/where-it-all-began-for-tennis-star-alex-eala).
+- Metro Manila court rates and access (Rancho Uno Marikina ₱100/hour with Facebook booking; UP Diliman hard and shell courts): [Spot.ph rentable courts guide](https://www.spot.ph/things-to-do/weekend-guides/89093/list-tennis-courts-in-metro-manila-a5006-20220423-lfrm).
+- PCA courts, Paco: [Global Tennis Network listing](https://www.globaltennisnetwork.com/tennis-courts/courts/tennis-court-page/court/51049-pca-tennis-courts).
+- LAX–MNL nonstop service and fare range (Philippine Airlines, ~15h40m, 17 weekly; recent round trips roughly $680–1,160): airline and aggregator listings via [Google Flights](https://www.google.com/travel/flights/flights-from-los-angeles-to-manila.html), checked 19 August 2026. Fares move; treat as a snapshot, same method as the 9 August airfare snapshots below.
+- Delta standby-pass marketplace check (Craigslist Los Angeles and SF Bay, Facebook Marketplace Los Angeles, 18 August 2026): zero live airline-pass listings; searches return unrelated "pass" items only.
