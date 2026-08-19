@@ -23,6 +23,8 @@ for (const term of [
   'Felicisimo Ampon', 'Rizal Memorial', 'Valle Verde', 'Rancho Uno', 'UP Diliman',
   'shell courts', 'play.psc.gov.ph', 'November to early December',
   '₱600', '₱100', 'no Uber', 'Grab', 'id="phmap"',
+  'Manila Bay', 'Pasig River', 'EDSA', 'LRT-1', 'MAKATI',
+  'Philippine Tennis', '117K', 'TikTok', 'tennisph', 'National Tennis Centre',
 ]) {
   assert.ok(html.includes(term), `missing Philippines planning fact: ${term}`);
 }

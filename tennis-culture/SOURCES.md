@@ -214,3 +214,11 @@ Checked live 19 August 2026; none of these venues has been contacted.
 - Felicisimo Ampon (Davis Cup 1939–1968, Philippine records): [PSC sports-hero profile](https://psc.gov.ph/psc_site/phisportshero-felicisimo-ampon/) and [Davis Cup player page](https://www.daviscup.com/en/players/07e8cb72-8321-4b45-b8d4-4aac9b4fa199).
 - The Courts founders Adil Dara and Leah Goren: [Tennis.com feature](https://www.tennis.com/news/articles/the-courts-where-more-than-just-tennis-is-served).
 - Rocco Arena and Chris Papa are recorded from Jerry's account (dictation spellings); Andrew Llagan and Evan Zhu are named as outreach channels, not confirmed contacts.
+
+### Update 19 August 2026 (third pass: platform receipts and energy)
+
+- Time-spent by platform in the Philippines (Facebook 1h31/day, TikTok 1h30, Instagram 34 min; Facebook 95.8M users): [Meltwater PH statistics](https://www.meltwater.com/en/blog/social-media-statistics-philippines) and [GMA News on the time-spent report](https://www.gmanetwork.com/news/scitech/technology/991811/filipinos-time-tiktok-facebook-report/story/).
+- Facebook group sizes and posting rates read inside Facebook group search, logged in, 19 August 2026 (Philippine Tennis 90K/90+ daily; Second Hand Tennis Rackets Market 117K/70+; Tennis Market Philippines 38K public + 78K private/90+; Tennis Buy and Sell 41K/90+; Manila Tennis Enthusiasts 55K/6; Tennis Coaching 2.7K/10+). Counts move; snapshot only.
+- Eala-boom reporting (world No. 20, court scarcity, racquet sales, Decathlon sponsorship requests, PhilTA National Tennis Centre, <1,000 courts nationwide): [AFP via Philstar, 14 Aug 2026](https://www.philstar.com/sports/2026/08/14/2549250/i-want-be-eala-philippine-sensation-sparks-tennis-boom-home) and [Daily Tribune](https://tribune.net.ph/2026/08/15/i-want-to-be-eala-philippine-sensation-sparks-tennis-boom-at-home).
+- TikTok #tennisph observed directly, 19 August 2026: beginner-journey series, daily Taglish coach clinics, hitting-partner posts, Wilson/Uniqlo/Decathlon PH tags, Philippine Women's Open content.
+- Map v2 geography (coast, Pasig River, EDSA, Vito Cruz LRT-1 by Rizal Memorial, Makati/BGC) drawn from the same Google Maps/OSM positions; a sketch, not navigation.
