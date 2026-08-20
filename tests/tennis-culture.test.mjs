@@ -24,6 +24,7 @@ for (const term of [
   'shell courts', 'play.psc.gov.ph', 'November to early December',
   '₱600', '₱100', 'no Uber', 'Grab', 'id="phmap"',
   'QUEZON CITY', 'MARIKINA', 'LRT-1', 'Makati or BGC', 'output=embed', '47 km',
+  'Marikina Sports Center', 'philippinecolumbianassociation.com', 'class="cd"', 'class="sat"', '&t=k&',
   'Philippine Tennis', '117K', 'TikTok', 'tennisph', 'National Tennis Centre',
 ]) {
   assert.ok(html.includes(term), `missing Philippines planning fact: ${term}`);

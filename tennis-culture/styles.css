@@ -67,6 +67,10 @@ img { display: block; width: 100%; height: auto; }
 figcaption { margin-top: 10px; line-height: 1.5; }
 #phmap { overflow-x: auto; }
 .gmap { display: block; width: 100%; height: 420px; border: 0; }
+.courts .cd { display: none; margin: 10px 0 4px; padding-left: 6px; }
+.courts .cd:target { display: block; }
+.sat { display: block; width: 100%; height: 300px; border: 0; background: #fff; margin: 8px 0 4px; }
+
 #phmap svg { min-width: 560px; display: block; }
 .end { margin-top: 104px; }
 @media (max-width: 1120px) {
