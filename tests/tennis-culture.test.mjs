@@ -11,11 +11,10 @@ for (const term of [
   'ball mower', 'Bellevue', 'daily job', 'Mike Cherman', 'Shingo Arai', 'One Hand Tony',
   'nothing finished to show Mike or Shingo', 'videographer friend',
   '17 August 2026', '10 August 2026', 'Late July 2026', 'what this changed',
-  'Current plan', '17 September', 'Market Studios',
-  'five designs a week', '30 August',
+  'first proof', '17 September', 'Market Studios',
   'Chris Papa', 'Adil Dara', 'Rocco Arena', 'Patrick Palacio Ondevilla',
-  'players who matter deeply in their country', 'field production and distribution',
-  'Tom Guilmard', 'Not a vacation', 'first player collaborator', 'field unit',
+  'seven to fourteen days', 'third author', 'Not a vacation', 'Southern California',
+  'Minding the Gap', 'In the Realm of Perfection', 'Clothes do not make this special',
 ]) {
   assert.ok(html.toLowerCase().includes(term.toLowerCase()), `missing record fact: ${term}`);
 }
