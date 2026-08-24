@@ -14,7 +14,8 @@ for (const term of [
   'first proof', '17 September', 'Market Studios',
   'Chris Papa', 'Adil Dara', 'Rocco Arena', 'Patrick Palacio Ondevilla',
   'seven to fourteen days', 'third author', 'Not a vacation', 'Southern California',
-  'Minding the Gap', 'In the Realm of Perfection', 'Clothes do not make this special',
+  'five hours', 'one running clock', 'seven days', 'every next court, ride, and bed',
+  'Tehching Hsieh', 'Russ Cook', 'In the Realm of Perfection', 'Clothes do not make this special',
 ]) {
   assert.ok(html.toLowerCase().includes(term.toLowerCase()), `missing record fact: ${term}`);
 }
