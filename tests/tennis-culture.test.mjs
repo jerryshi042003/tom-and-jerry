@@ -14,6 +14,8 @@ for (const term of [
   'Current plan', '17 September', 'Market Studios',
   'five designs a week', '30 August',
   'Chris Papa', 'Adil Dara', 'Rocco Arena', 'Patrick Palacio Ondevilla',
+  'players who matter deeply in their country', 'field production and distribution',
+  'Tom Guilmard', 'Not a vacation', 'first player collaborator', 'field unit',
 ]) {
   assert.ok(html.toLowerCase().includes(term.toLowerCase()), `missing record fact: ${term}`);
 }

@@ -1,6 +1,6 @@
 # Jerry / Tom working notes — source ledger
 
-Updated 9 August 2026.
+Updated 24 August 2026.
 
 ## Claude review and exact place leads
 
@@ -100,6 +100,7 @@ ASICS is verified. No public source reviewed established a current Setinn or Shi
 
 ## Creator and LA leads
 
+- [Tom Guilmard / The Van Am](https://thevan.am/) and [Instagram](https://www.instagram.com/tomguilmard/) — public project page inspected 24 August 2026. Guilmard describes an 87-day trip around Europe in a tiny van, playing anyone who accepted and documenting the adventure. The site records opponents, scores, courts, locations, and a first-person travel diary. This supports the comparison on the working page. The Jerry / Tom mission and differentiation are Jerry-supplied on 24 August, not claims made by Guilmard.
 - [Tony Zhao / One Hand Tony](https://www.instagram.com/onehandtony/) — public bio: tennis creative, collaboration channel, Yonex Canada. Availability and project fit are open.
 - [Little Tokyo Table Tennis](https://www.instagram.com/littletokyotabletennis/) and [site](https://lttt.life/) — community/collaboration reference; no Jerry relationship claimed.
 - [Grand Slam LA](https://www.instagram.com/grandslamla/) — independent/local tennis boutique and events.
