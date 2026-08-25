@@ -1,6 +1,6 @@
 # Jerry / Tom working notes — source ledger
 
-Updated 24 August 2026.
+Updated 25 August 2026.
 
 ## Claude review and exact place leads
 
@@ -59,6 +59,14 @@ The page now separates three kinds of material:
 - A proposed next proof, explicitly not agreed by Jerry, Tom, Mike, Shingo, a player, or a camera person.
 
 The previous wording implied that two people could shadow, Los Angeles was the plan, and Tom had accepted responsibility for a deliverable. Those were inferences. They are no longer stated as commitments.
+
+### 24 to 25 August call
+
+Jerry supplied the Apple Notes transcript of a 17 minute, 9 second call titled `Call with Tom Oh`. The recording began at 11:52 p.m. on 24 August and crossed midnight. The public page condenses only project-relevant decisions and tone. The complete transcript is not stored in this public repository.
+
+Apple's speaker labels identify Tom Oh and Jerry (`You`). The audio was not supplied, so the words and speaker boundaries have not been independently checked against the recording. Statements about what Tom wanted, ordered, or volunteered come from that transcript. The `sentiment` line is a close synthesis of both speakers' repeated rejection of a transactional approach to Rudy, not a separate quote or a claim that Rudy has agreed to participate.
+
+Private remarks about Rudy, unrelated AI and computer-security discussion, and casual legal or copyright opinions were deliberately excluded because they do not change the project and are not appropriate for a public working record. The call establishes no posting obligation, endorsement, training appointment, production order beyond Tom's existing samples, or permission to use Rudy's name or likeness.
 
 ## Mike Cherman
 
